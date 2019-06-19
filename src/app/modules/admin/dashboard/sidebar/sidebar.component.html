@@ -1,0 +1,22 @@
+<div class="sidebar">
+    <app-profile-badge></app-profile-badge>
+    <ul class="main">
+        <li class="main__item" *ngFor="let content of contents; let i = index">
+            <a [routerLink]="[content.link]" [class]="content.active ? 'active' : null" (click)="toggleMenuItem(i)">
+                <span>
+                    <i class="material-icons-outlined">{{content.icon}}</i>
+                    {{content.text}}
+                </span>
+                <i *ngIf="content.subMenu.length > 0" [style.transform]="content.active ? 'rotate(-90deg)' : 'rotate(0deg)'" class="material-icons-outlined caret">keyboard_arrow_left</i>
+            </a>
+            <ul class="sub" *ngIf="content.subMenu.length > 0 && content.active" class="sub">
+                <li class="sub__item" *ngFor="let item of content.subMenu; let s = index">
+                    <a [routerLink]="item.link" (click)="toggleSubMenuItem(i, s)">
+                        <div [class]="item.active ? 'dot dot-active' : 'dot'"></div>
+                        {{item.text}}
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

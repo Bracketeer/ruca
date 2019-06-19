@@ -1,0 +1,84 @@
+@import 'styles'
+.sidebar
+    position: fixed
+    left: 0
+    top: 60px
+    bottom: 0
+    width: 250px
+    color: $dark
+    ul.main
+        padding: 0
+        margin: 0
+        // border-top: 1px solid darken($activegray, 5%) //TODO: Maybe add a menu above?
+        li.main__item
+            padding: 0px
+            width: 100%
+            list-style: none
+            display: flex
+            justify-content: space-between
+            align-items: center
+            flex-direction: column
+            box-sizing: border-box
+            a
+                transition: .3s linear background, .5s ease border
+                padding: 20px 10px
+                width: 100%
+                @include flex-row-center
+                box-sizing: border-box
+                justify-content: space-between
+                color: lighten($dark, 30%)
+                text-decoration: none
+                border-left: 5px solid transparent
+                font-size: 14px
+                span
+                    @include flex-row-center
+                    justify-content: flex-start
+                &:hover .material-icons-outlined
+                    color: transparentize($primary, .3)
+                .material-icons-outlined
+                    margin-right: 10px
+                    color: lighten($dark, 30%)
+                    transition: .3s linear all
+                .caret
+                    margin-right: 10px
+                    color: lighten($dark, 50%)
+                    transition: .3s ease all
+            .active
+                border-left: 5px solid $primary
+                background: $activegray
+        .sub
+            padding: 0
+            border-bottom: 1px solid darken($activegray, 2%)
+            border-right: 1px solid darken($activegray, 2%)
+            background: lighten($activegray, 1%)
+            box-sizing: border-box
+            width: calc(100% - 1px)
+            li.sub__item
+                border-left: 5px solid transparentize($primary, .5)
+                box-sizing: border-box
+                position: relative
+                a
+                    font-size: 14px
+                    @include flex-row-center
+                    justify-content: flex-start
+                    .dot
+                        width: 24px
+                        height: 24px
+                        margin-right: 10px
+                        @include flex-row-center
+                        &:before
+                            display: block
+                            content: ""
+                            background: lighten($dark, 70%)
+                            width: 10px
+                            border-radius: 4px
+                            height: 4px
+                    .dot-active:before
+                        width: 8px
+                        height: 8px
+                        border-radius: 50%
+                        background: transparentize($primary, .5)
+                        
+
+    
+                        

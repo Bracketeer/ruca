@@ -1,0 +1,33 @@
+@import 'styles'
+
+nav
+    @include flex-row-center
+    justify-content: space-between
+    box-sizing: border-box
+    background: #ffffff
+    color: #ffffff
+    border-top: 2px solid $secondary
+    position: fixed
+    left: 0
+    right: 0
+    top: 0
+    ul
+        list-style: none
+        margin: 0
+        padding: 0
+        li
+            padding: 20px
+            box-sizing: border-box
+            a
+                color: $primary
+                padding: 15px 20px
+                text-decoration: none
+                margin: 5px
+                &:hover
+                    color: $secondary
+            .login
+                color: #ffffff
+                background: darken($primary, 20%)
+                &:hover
+                    color: #ffffff
+                    background: darken($primary, 10%)
