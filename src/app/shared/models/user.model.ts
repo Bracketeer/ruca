@@ -1,4 +1,6 @@
 export interface IUser {
+    displayName: string,
+    photoURL: string,
     name: {
         first: string,
         middle: string,
@@ -9,7 +11,10 @@ export interface IUser {
         line1: string,
         line2: string,
         city: string,
-        state: string,
+        state: {
+            name: string,
+            abbreviation: string,
+        },
         zipcode: number
     }
 

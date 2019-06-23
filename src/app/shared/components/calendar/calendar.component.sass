@@ -1,0 +1,190 @@
+@import 'styles'
+$block-size: 60px
+.calendar
+    padding: 10px
+    border-radius: 3px
+    box-shadow: 0px 0px 3px rgba(0,0,0,.1)
+    background: #ffffff
+    box-sizing: border-box
+    position: relative
+    user-select: none
+    .day
+        text-align: center
+        width: calc(100% / 7)
+        padding-top: 2px
+        padding-bottom: 4px
+        color: $primary
+        box-sizing: border-box
+        font-size: 12px
+    .date
+        border: 1px solid #e9e9e9
+        margin: 2px
+        height: $block-size
+        width: calc((100% / 7) - 6px)
+        display: inline-block
+        position: relative
+        border-radius: 3px
+        transition: .3s ease box-shadow
+        cursor: pointer
+        overflow: hidden
+        box-sizing: border-box
+        padding: 5px
+        padding-top: 20px
+        &:hover
+            box-shadow: 0px 0px 3px rgba(0,0,0,.2)
+    .dateoutofrange
+        margin: 2px
+        border: 1px solid #f6f6f6
+        background: transparent
+        height: $block-size
+        width: calc((100% / 7) - 6px)
+        display: inline-block
+        position: relative
+        box-sizing: border-box
+    .datenumber
+        position: absolute
+        left: 2px
+        top: 2px
+        width: 20px
+        height: 20px
+        border: 1px solid #e9e9e9
+        background: #f6f6f6
+        display: flex
+        align-items: center
+        justify-content: center
+        color: gray
+        font-weight: 300
+        font-size: 12px
+        border-radius: 3px
+        box-sizing: border-box
+    .calendargrid
+        box-sizing: border-box
+        display: flex
+        flex-direction: row
+        flex-wrap: wrap
+    .dateheader
+        width: 100%
+        display: flex
+        flex-direction: row
+        justify-content: center
+        align-items: center
+        font-size: 30px
+        font-weight: 300
+        color: $primary
+        display: flex
+        box-sizing: border-box
+        justify-content: space-between
+    .dateheadercontainer
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        .year
+            font-size: 12px
+    .arrow
+        margin: 10px
+        cursor: pointer
+    .currentday
+        background: $primary
+        color: #ffffff
+    .highlightedday
+        border: 1px solid transparentize($primary, 0)
+        box-shadow: 0px 0px 5px transparentize($primary, 0) !important
+        transition: .3s ease all
+
+    .menu-button
+        width: 20px
+        height: 20px
+        position: absolute
+        right: 0
+        top: 0
+        color: darken($lightgray, 30%)
+        margin: 5px 10px
+        cursor: pointer
+        z-index: 3
+    .menu
+        padding: 20px
+        background: #ffffff
+        position: absolute
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
+        z-index: 2
+        .menu-header
+            color: $primary
+            font-weight: bold
+            text-transform: uppercase
+            margin-bottom: 20px
+            border-bottom: 2px solid $primary
+        .setting-group
+            display: flex
+            // justify-content: space-between
+            align-items: center
+            .setting-header
+                margin-right: 20px
+                font-weight: bold
+                text-transform: uppercase
+                color: $primary
+                font-size: 14px
+            .settings
+                display: flex
+                justify-content: flex-start
+                align-items: center
+                .size-block-group
+                    display: flex
+                    border: 1px solid
+                    border: 1px solid darken($lightgray, 10%)
+                    margin-right: 10px
+                    cursor: pointer
+                    &:hover
+                        background: transparentize($secondary, .5)
+                    &:hover > .size-block
+                        background: transparentize($primary, .5)
+                    &:hover > .--grayed-out
+                        background: #ffffff
+                    .size-block
+                        margin: 1px
+                        height: 20px
+                        width: 20px
+                        border: 1px solid $primary
+                        background: transparentize($primary, .3)
+                        position: relative
+                    .--grayed-out
+                        background: #ffffff
+                        border: 1px solid darken($lightgray, 10%) 
+.highlighted-date-range
+    background: transparentize($primary, .7)
+.date-event
+    box-sizing: border-box
+    font-size: 8px
+    display: flex
+    align-items: center
+    .event-node
+        height: 7px
+        width: 7px
+        border-radius: 7px
+        margin-right: 5px
+:host[class=grid-row-1]
+    .calendar
+        padding: 0
+    .calendargrid
+        overflow-y: scroll
+        max-height: 500px
+    .dateheader
+        position: sticky
+    .dateoutofrange, .day
+        display: none
+    .date
+        width: 100%
+        height: auto
+    .menu
+        .setting-group
+            flex-direction: column
+            .setting-header
+                margin-right: 0
+:host[class=grid-row-2]
+    .date, .dateoutofrange
+        height: 90px
+// :host[class=grid-row-3]
+//     .agenda        

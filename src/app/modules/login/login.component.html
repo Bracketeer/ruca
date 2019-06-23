@@ -1,3 +1,18 @@
-<p>
-  login works!
-</p>
+<form class="login-form" (submit)="auth.signInWithEmailAndPassword(email, password)">
+  <h1>Please Login</h1>
+  <div class="input-group">
+    <input id="email" name="email" type="email" [(ngModel)]="email" />
+    <label for="email">email</label>
+    <div class="focus-field"></div>
+  </div>
+  <div class="input-group">
+    <input id="password" name="password" type="password" [(ngModel)]="password" />
+    <label for="password">password</label>
+    <div class="focus-field"></div>
+  </div>
+  <div class="input-group">
+    <button type="submit">Sign In</button>
+    <p>or</p>
+    <a (click)="auth.signInWithGoogle()">Sign in with Google</a>
+  </div>
+</form>

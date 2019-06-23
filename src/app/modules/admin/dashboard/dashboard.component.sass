@@ -2,4 +2,16 @@
 .dashboard
     background: $lightgray
     width: 100%
-    min-height: calc(100vh - 60px)
+    height: calc(100vh - 70px)
+    display: flex
+.dashboard-content
+    width: 100%
+    margin: 20px
+    display: grid
+    grid-template-columns: repeat(3, 1fr)
+    // grid-template-rows: repeat(3, 300px)
+    margin-left: 250px
+    app-calendar
+.full-width-row
+    grid-column-start: 0 / 3
+    grid-column-end: span 3

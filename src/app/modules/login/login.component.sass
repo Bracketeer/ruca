@@ -1,0 +1,109 @@
+@import 'styles'
+form.login-form
+    @include flex-column-center
+    height: calc(100vh - 200px)
+    margin: 100px auto 70px auto
+    background: $primary
+    box-sizing: border-box
+    border-radius: 3px
+    box-shadow: 0 0 70px rgba(99,99,99, .3)
+    border: 1px solid $secondary
+    width: 100%
+    max-width: 900px
+    padding: 20px
+    @media (max-width: 940px)
+        margin: 100px 20px 70px 20px
+        width: auto
+    h1
+        color: #ffffff
+        text-align: center
+    p
+        color: #ffffff
+        text-align: center
+        margin: 20px auto
+    .input-group
+        position: relative
+        box-sizing: border-box
+        perspective: 500px
+        margin: 20px auto
+        width: 100%
+        max-width: 500px
+        a
+            text-align: center
+            background: tomato
+            width: 100%
+            color: #ffffff
+            box-sizing: border-box
+            display: block
+            padding: 20px
+            &:hover
+                background: darken(tomato, 5%)
+        label
+            position: absolute
+            box-sizing: border-box
+            width: 100%
+            bottom: 0
+            overflow: visible
+            height: 3px
+            border-radius: 3px
+            background: transparentize(#ffffff, .5)
+            z-index: 2
+            line-height: 35px
+            color: transparentize(#ffffff, .2)
+            transition: .3s ease all
+            transform-origin: left center
+            padding-left: 10px
+            left: 0
+        input
+            all: unset
+            box-sizing: border-box
+            padding: 20px 20px 10px 20px
+            width: 100%
+            display: block
+            background: transparent
+            position: relative
+            z-index: 1
+            transition: .3s ease all
+            color: #ffffff
+            &:focus
+                color: darken($primary, 20%)
+            &:focus ~ .focus-field
+                transform: rotateX(0deg)
+                opacity: 1
+            &:focus + label
+                height: 3px
+                border-radius: 3px
+                line-height: 32px
+                background: transparent
+                bottom: 58px
+                transform: scale(.8)
+                color: $primary
+        .focus-field
+            content: ""
+            opacity: 0
+            display: block
+            height: 58px
+            // background: transparentize(darken($primary, 20%), .8)
+            background: transparentize(#ffffff, .5)
+            width: 100%
+            border-radius: 3px
+            position: absolute
+            bottom: 0
+            z-index: 0
+            transform-style: preserve-3d
+            transform-origin: center bottom
+            transform: rotateX(90deg)
+            transition: .3s ease-out all
+        button
+            all: unset
+            display: block
+            margin-top: 25px
+            background: lighten($primary, 5%)
+            width: 100%
+            padding: 20px
+            color: #ffffff
+            box-sizing: border-box
+            text-align: center
+            cursor: pointer
+            &:hover
+                background: transparentize(lighten($primary, 5%), .3)

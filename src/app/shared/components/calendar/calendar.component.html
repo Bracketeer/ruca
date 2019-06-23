@@ -1,0 +1,58 @@
+<div class="calendar">
+    <div class="dateheader">
+    <div class="arrow" (click)="date = newDate(-1)">
+      <</div>
+        <div class="dateheadercontainer">
+        {{months[displayMonth]}}
+        <span class="year">{{currentYear}}</span>
+    </div>
+    <div class="arrow" (click)="date = newDate(1)">></div>
+  </div>
+  <div class="calendargrid">
+    <div class="day" *ngFor="let day of days">{{getDayOfWeek(day)}}</div>
+    <ng-container *ngFor="let date of monthgrid; let i = index">
+      <div class="date" *ngIf="i > (firstDay - 1) && i < (lastDay + firstDay); else blank"
+        [ngClass]="highlightedDay === i ? 'highlighted-date-range': null" (click)="highlightedDay = i" (mouseup)="endDaysByDrag(i - (firstDay - 1))" (mousedown)="createEventByDrag(i - (firstDay - 1))">
+        <div class="datenumber"
+          [ngClass]="(i + 1) - firstDay === currentDay && this.displayMonth === this.currentMonth ? 'currentday': null">
+          {{i - (firstDay - 1)}}</div>
+          <div class="date-event" *ngFor="let event of displayCalendarEvents(i - (firstDay - 1))" (click)="eventDetails = event">
+            <div class="event-node" [style.background]="event.color"></div>
+            {{event.name}}
+          </div>
+      </div>
+      <ng-template #blank>
+        <div class="dateoutofrange"></div>
+      </ng-template>
+    </ng-container>
+  </div>
+  <div class="menu-button" (click)="menu = !menu">
+    <i class="material-icons">{{menu ? 'close' : 'menu'}}</i>
+  </div>
+  <div class="menu" *ngIf="menu">
+    <div class="menu-header">Settings</div>
+    <div class="setting-group">
+      <div class="setting-header">
+        Widget Size
+      </div>
+      <div class="settings">
+      <div class="size-block-group" (click)="widgetSize = 'grid-row-1'">
+        <div class="size-block"></div>
+        <div class="size-block --grayed-out"></div>
+        <div class="size-block --grayed-out"></div>
+      </div>
+      <div class="size-block-group" (click)="widgetSize = 'grid-row-2'">
+        <div class="size-block"></div>
+        <div class="size-block"></div>
+        <div class="size-block --grayed-out"></div>
+      </div>
+      <div class="size-block-group" (click)="widgetSize = 'grid-row-3'">
+        <div class="size-block"></div>
+        <div class="size-block"></div>
+        <div class="size-block"></div>
+      </div>
+      </div>
+    </div>
+  </div>
+  <app-calendar-details *ngIf="eventDetails" [eventDetails]="eventDetails" (updateEventDetails)="updateEventDetails($event)"></app-calendar-details>
+</div>

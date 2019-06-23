@@ -1,0 +1,10 @@
+<div class="container">
+<div class="event-details">
+    {{eventDetails.id}}
+    <label for="eventName">Name</label>
+    <input name="eventName" type="text" [(ngModel)]="eventDetails.name">
+    <label>Description</label>
+    <textarea name="eventDescription" id="eventDescription" cols="30" rows="10" [(ngModel)]="eventDetails.description"></textarea>
+    <button (click)="updatedEventDetails()">Save</button>
+</div>
+</div>

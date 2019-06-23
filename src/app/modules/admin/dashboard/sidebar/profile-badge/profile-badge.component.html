@@ -1,9 +1,16 @@
 <div class="profile-badge">
   <div class="avatar">
-    <img src="https://fillmurray.com/200/200" alt="">
+    <img *ngIf="auth.userDetails?.photoURL; else defaultPhoto" [src]="auth.userDetails?.photoURL" alt="">
+    <ng-template #defaultPhoto>
+      <img src="/assets/images/account_circle.svg">
+    </ng-template>
   </div>
   <div class="info">
-    <span>Welcome,</span>
-    <b>Brent Stradling</b>
+    <span>
+      <ng-container *ngIf="auth.userDetails?.displayName">Welcome,</ng-container>
+      <ng-container *ngIf="!auth.userDetails?.displayName">Welcome!</ng-container>
+    </span>
+    <b *ngIf="auth.userDetails?.displayName">{{auth.userDetails?.displayName}}</b>
+    <a (click)="auth.logout()">logout</a>
   </div>
 </div>

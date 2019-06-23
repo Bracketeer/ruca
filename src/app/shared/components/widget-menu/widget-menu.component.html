@@ -1,0 +1,24 @@
+<div class="menu-button">
+  <i class="material-icons">menu</i>
+</div>
+  <div class="menu">
+    <p>Settings</p>
+    <div class="size">
+      Widget Size
+      <div class="size-block-group" (click)="widgetSize = 'grid-row-1'">
+        <div class="size-block"></div>
+        <div class="size-block --grayed-out"></div>
+        <div class="size-block --grayed-out"></div>
+      </div>
+      <div class="size-block-group" (click)="widgetSize = 'grid-row-2'">
+        <div class="size-block"></div>
+        <div class="size-block"></div>
+        <div class="size-block --grayed-out"></div>
+      </div>
+      <div class="size-block-group" (click)="widgetSize = 'grid-row-3'">
+        <div class="size-block"></div>
+        <div class="size-block"></div>
+        <div class="size-block"></div>
+      </div>
+    </div>
+  </div>
