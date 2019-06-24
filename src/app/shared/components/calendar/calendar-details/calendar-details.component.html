@@ -1,10 +1,77 @@
 <div class="container">
-<div class="event-details">
-    {{eventDetails.id}}
-    <label for="eventName">Name</label>
-    <input name="eventName" type="text" [(ngModel)]="eventDetails.name">
-    <label>Description</label>
-    <textarea name="eventDescription" id="eventDescription" cols="30" rows="10" [(ngModel)]="eventDetails.description"></textarea>
-    <button (click)="updatedEventDetails()">Save</button>
+<div class="event-details" [style.borderTop]="'10px solid' + eventDetails.color">
+    <div class="input-group">
+        <label for="eventName">Name</label>
+        <input name="eventName" autocomplete="off" placeholder="Event Name" type="text" [(ngModel)]="eventDetails.name">
+    </div>
+    <div class="input-group">
+        <label>Event Color</label>
+        <div class="event-color-selection">
+            <ng-container *ngFor="let color of colors">
+                <div class="event-color" [style.background]="color" (click)="eventDetails.color = color"></div>
+            </ng-container>
+        </div>
+    </div>
+    <div class="input-group input-bundle">
+        <div class="inner-group">
+        <label for="startDate">Start Date</label>
+        <input type="date" class="date" name="startDate" id="startDate"  [ngModel]="eventDetails.start | date:'yyyy-MM-dd'" (ngModelChange)="eventStart.date = $event">
+        </div>
+        <div class="inner-group">
+            <label for="startTime">Start Time</label>
+            <input class="time" type="tel" name="startTime" id="startTimeHour" [ngModel]="eventDetails.start | date: 'hh'" (ngModelChange)="eventStart.hours = $event">:
+            <input class="time" type="tel" name="startTime" id="startTimeMinutes" [ngModel]="eventDetails.start | date: 'mm'" (ngModelChange)="eventStart.minutes = $event">
+        </div>
+        <div class="inner-group">
+            <div class="radio-group">
+                <input id="start-time-am" checked type="radio" name="start-am-pm-toggle" value="0" (click)="eventStart.timeOfday = 0">
+                <label class="am-pm" for="start-time-am">AM</label>
+            </div>
+            <div class="radio-group">
+                <input id="start-time-pm" type="radio" name="start-am-pm-toggle" value="12" (click)="eventStart.timeOfday = 12">
+                <label class="am-pm" for="start-time-pm">PM</label>
+            </div>
+        </div>
+    </div>
+    <!-- {{eventStart.date}}<br>
+    {{eventStart.hours}}<br>
+    {{eventStart.minutes}}<br>
+    {{eventStart.timeOfday}}<br>
+    {{eventDetails.start}}<br>
+    {{eventEnd.date}}<br>
+    {{eventEnd.hours}}<br>
+    {{eventEnd.minutes}}<br>
+    {{eventEnd.timeOfday}}<br>
+    {{eventDetails.end}}<br> -->
+    <div class="input-group input-bundle">
+        <div class="inner-group">
+            <label for="endDate">End Date</label>
+            <input class="date" type="date" name="endDate" id="endDate"  [ngModel]="eventDetails.end | date:'yyyy-MM-dd'" (ngModelChange)="eventEnd.date = $event">
+        </div>
+        
+        <div class="inner-group">
+            <label for="EndDate">End Time</label>
+            <input class="time" type="tel" name="endTime" id="endTimeHour" [ngModel]="eventDetails.end | date: 'hh'" (ngModelChange)="eventEnd.hours = $event">:
+            <input class="time" type="tel" name="endTime" id="endTimeMinutes"  [ngModel]="eventDetails.end|  date: 'mm'" (ngModelChange)="eventEnd.minutes = $event">
+        </div>
+        <div class="inner-group">
+            <div class="radio-group">
+                <input id="end-time-am" checked type="radio" name="end-am-pm-toggle" value="0" (click)="eventEnd.timeOfday = 0">
+                <label class="am-pm" for="end-time-am">AM</label>
+            </div>
+            <div class="radio-group">
+                <input id="end-time-pm" type="radio" name="end-am-pm-toggle" value="12" (click)="eventEnd.timeOfday = 12">
+                <label class="am-pm" for="end-time-pm">PM</label>
+            </div>
+        </div>
+    </div>
+    <div class="input-group">
+        <label>Description</label>
+        <textarea name="eventDescription" id="eventDescription" cols="30" rows="5" [(ngModel)]="eventDetails.description"></textarea>
+    </div>
+    <div class="input-group button-group">
+        <button (click)="canceledEventChanges()">Cancel</button>
+        <button class="primary" (click)="updatedEventDetails()">Save</button>
+    </div>
 </div>
 </div>

@@ -12,13 +12,17 @@
     <div class="day" *ngFor="let day of days">{{getDayOfWeek(day)}}</div>
     <ng-container *ngFor="let date of monthgrid; let i = index">
       <div class="date" *ngIf="i > (firstDay - 1) && i < (lastDay + firstDay); else blank"
-        [ngClass]="highlightedDay === i ? 'highlighted-date-range': null" (click)="highlightedDay = i" (mouseup)="endDaysByDrag(i - (firstDay - 1))" (mousedown)="createEventByDrag(i - (firstDay - 1))">
+        [ngClass]="highlightedDay === i ? 'highlighted-date-range': null" (click)="highlightedDay = i" (mouseup)="endDaysByDrag(i - (firstDay - 1), null, $event)" (mousedown)="createEventByDrag(i - (firstDay - 1))">
         <div class="datenumber"
           [ngClass]="(i + 1) - firstDay === currentDay && this.displayMonth === this.currentMonth ? 'currentday': null">
           {{i - (firstDay - 1)}}</div>
-          <div class="date-event" *ngFor="let event of displayCalendarEvents(i - (firstDay - 1))" (click)="eventDetails = event">
-            <div class="event-node" [style.background]="event.color"></div>
-            {{event.name}}
+          <div class="events-container">
+            <a class="date-event" *ngFor="let event of displayCalendarEvents(i - (firstDay - 1))" (click)="endDaysByDrag(i - (firstDay - 1), event, $event)">
+              <div class="event-node" [style.background]="event.color"></div>
+              <div class="event-name">
+                {{event.name}}
+              </div>
+            </a>
           </div>
       </div>
       <ng-template #blank>
@@ -54,5 +58,5 @@
       </div>
     </div>
   </div>
-  <app-calendar-details *ngIf="eventDetails" [eventDetails]="eventDetails" (updateEventDetails)="updateEventDetails($event)"></app-calendar-details>
+  <app-calendar-details *ngIf="eventDetails" [eventDetails]="eventDetails" (cancelEventChanges)="eventDetails = null" (updateEventDetails)="updateEventDetails($event)"></app-calendar-details>
 </div>

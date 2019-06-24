@@ -50,33 +50,19 @@ export class CalendarComponent implements OnInit {
     return this.widgetSize === 'grid-row-1' ? day.charAt(0) : day
   }
   updateEventDetails(event: CalendarEvent) {
-    this.calendarEvents.forEach(calEvent => {
-      if (calEvent.id === event.id) {
-        calEvent = event;
-      }
-    })
-    this.eventDetails = null;
-  }
-  createEventByDrag(date: number) {
-    this.eventStartDate = date;
+    const hasEvent = this.calendarEvents.map(cal => cal.id).includes(event.id);
+    if (hasEvent) {
+      this.calendarEvents.forEach(calEvent => {
+        if (calEvent.id === event.id) {
+          calEvent = event;
+        }
+      })
+    } else {
+      this.calendarEvents.push(event);
+    }
     const dateNumbers = document.querySelectorAll('.date') as any;
     dateNumbers.forEach(dateNumber => dateNumber.classList.remove('highlighted-date-range'));
-    document.querySelector('.calendar').addEventListener('mousemove', this.selectDays)
-  }
-  selectDaysByDrag(event: any) {
-    if (event.target.classList.contains('date')) {
-      const dateNumbers = document.querySelectorAll('.date') as any;
-      dateNumbers.forEach(dateNumber => {
-        if (
-          Number(dateNumber.innerText) >= this.eventStartDate &&
-          Number(dateNumber.innerText) <= Number(event.target.innerText)
-        ) {
-          dateNumber.classList.add('highlighted-date-range');
-        } else {
-          dateNumber.classList.remove('highlighted-date-range');
-        }
-      });
-    }
+    this.eventDetails = null;
   }
   displayCalendarEvents(date) {
     return this.calendarEvents.filter(event => {
@@ -88,21 +74,60 @@ export class CalendarComponent implements OnInit {
       }
     })
   }
-  endDaysByDrag(date: any) {
-    this.eventEndDate = date;
-    this.calendarEvents.push({
-      id: '_' + Math.random().toString(36).substr(2, 9),
-      start: new Date(`${this.currentYear}/${this.currentMonth + 1}/${this.eventStartDate} 08:00:00 GMT-0500`),
-      end: new Date(`${this.currentYear}/${this.currentMonth + 1}/${this.eventEndDate} 09:00:00 GMT-0500`),
-      name: 'calendar event',
-      color: 'red',
-      description: 'description',
-    })
-    console.log(this.calendarEvents)
+  findUpClassName(el, className) {
+    while (el.parentNode) {
+      el = el.parentNode;
+      if (el.classList && el.classList.contains(className)) return el;
+    }
+    return null;
+  }
+  createEventByDrag(date: number) {
+    this.eventStartDate = date;
+    const dateNumbers = document.querySelectorAll('.date') as any;
+    dateNumbers.forEach(dateNumber => dateNumber.classList.remove('highlighted-date-range'));
+    document.querySelector('.calendar').addEventListener('mousemove', this.selectDays)
+  }
+  selectDaysByDrag(event: any) {
+    const dateNumbers = document.querySelectorAll('.date') as any;
+    const element = this.findUpClassName(event.target, 'date');
+      dateNumbers.forEach(dateNumber => {
+        if (
+          element &&
+          Number(dateNumber.children[0].innerText) >= this.eventStartDate &&
+          Number(dateNumber.children[0].innerText) <= Number(element.children[0].innerText)
+        ) {
+          dateNumber.classList.add('highlighted-date-range');
+        } else if (element && Number(dateNumber.children[0].innerText) > Number(element.children[0].innerText)){
+          dateNumber.classList.remove('highlighted-date-range');
+        }
+      });
+    if (element) {
+      this.eventEndDate = Number(element.children[0].innerText);
+    }
+    // }
+  }
+  endDaysByDrag(date: any, event: CalendarEvent, e: Event) {
+    e.stopPropagation();
     document.querySelector('.calendar').removeEventListener('mousemove', this.selectDays)
+    // console.log(event)
+    // this.eventEndDate = date;
+    if (!event) {
+      
+      this.eventDetails = {
+        id: '_' + Math.random().toString(36).substr(2, 9),
+        start: new Date(`${this.currentYear}/${this.currentMonth + 1}/${this.eventStartDate} 08:00:00 GMT-0500`),
+        end: new Date(`${this.currentYear}/${this.currentMonth + 1}/${this.eventEndDate} 09:00:00 GMT-0500`),
+        name: '',
+        color: '#0395A5',
+        description: '',
+      }
+    } else {
+      this.eventDetails = event;
+    }
+    const dateNumbers = document.querySelectorAll('.date') as any;
+    dateNumbers.forEach(dateNumber => dateNumber.classList.remove('highlighted-date-range'));
   }
   ngOnInit() {
-    console.log(new Date())
     this.currentMonth = this.date.getMonth();
     this.displayMonth = this.date.getMonth();
     this.currentYear = this.date.getFullYear();
