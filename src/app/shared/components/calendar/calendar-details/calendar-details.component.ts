@@ -11,6 +11,7 @@ export class CalendarDetailsComponent implements OnInit {
   @Output() updateEventDetails = new EventEmitter();
   @Output() cancelEventChanges = new EventEmitter();
   backupEventDetails: CalendarEvent;
+  event: CalendarEvent;
   eventStart = {
     date: new Date(),
     hours: 16,
@@ -23,22 +24,24 @@ export class CalendarDetailsComponent implements OnInit {
     minutes: 0,
     timeOfDay: 0
   };
-  colors: Array<string> = ['#e67e22', '#f1c40f', '#16a085', '#0395A5', '#7d3c98', '#e74c3c'];
+  colors: Array<string> = ['#0395A5', '#7d3c98', '#16a085', '#f1c40f', '#e67e22', '#e74c3c'];
   constructor () { }
   updatedEventDetails() {
-    this.eventDetails.start = new Date(`${new Date(this.eventStart.date).getFullYear()}-${new Date(this.eventStart.date).getMonth() + 1}-${new Date(this.eventStart.date).getDate()} ${this.eventStart.hours + this.eventStart.timeOfDay}:${this.eventStart.minutes}`);
-    this.eventDetails.end = new Date(`${new Date(this.eventEnd.date).getFullYear()}-${new Date(this.eventEnd.date).getMonth() + 1}-${new Date(this.eventEnd.date).getDate()} ${this.eventEnd.hours + this.eventEnd.timeOfDay}:${this.eventEnd.minutes}`);
+    this.event.start = new Date(`${new Date(this.eventStart.date).getFullYear()}-${new Date(this.eventStart.date).getMonth() + 1}-${new Date(this.eventStart.date).getDate()} ${this.eventStart.hours + this.eventStart.timeOfDay}:${this.eventStart.minutes}`);
+    this.event.end = new Date(`${new Date(this.eventEnd.date).getFullYear()}-${new Date(this.eventEnd.date).getMonth() + 1}-${new Date(this.eventEnd.date).getDate()} ${this.eventEnd.hours + this.eventEnd.timeOfDay}:${this.eventEnd.minutes}`);
     console.log(this.eventDetails)
-    this.updateEventDetails.emit(this.eventDetails);
+    this.eventDetails = this.event;
+    this.updateEventDetails.emit(this.event);
   }
   canceledEventChanges() {
-    this.eventDetails = this.backupEventDetails
-    this.cancelEventChanges.emit(this.eventDetails);
+    this.eventDetails = this.backupEventDetails;
+    this.updateEventDetails.emit(this.eventDetails);
   }
   getEventDate(date: Date) {
     return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
   }
   ngOnInit() {
+    this.event = JSON.parse(JSON.stringify(this.eventDetails))
     this.backupEventDetails = JSON.parse(JSON.stringify(this.eventDetails))
     this.eventStart.date = this.eventDetails.start; 
     this.eventEnd.date = this.eventDetails.end;

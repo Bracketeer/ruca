@@ -1,26 +1,26 @@
 <div class="container">
-<div class="event-details" [style.borderTop]="'10px solid' + eventDetails.color">
+<div class="event-details" [style.borderTop]="'10px solid' + event.color">
     <div class="input-group">
         <label for="eventName">Name</label>
-        <input name="eventName" autocomplete="off" placeholder="Event Name" type="text" [(ngModel)]="eventDetails.name">
+        <input name="eventName" autocomplete="off" placeholder="Event Name" type="text" [(ngModel)]="event.name">
     </div>
     <div class="input-group">
         <label>Event Color</label>
         <div class="event-color-selection">
             <ng-container *ngFor="let color of colors">
-                <div class="event-color" [style.background]="color" (click)="eventDetails.color = color"></div>
+                <div class="event-color" [style.background]="color" (click)="event.color = color"></div>
             </ng-container>
         </div>
     </div>
     <div class="input-group input-bundle">
         <div class="inner-group">
         <label for="startDate">Start Date</label>
-        <input type="date" class="date" name="startDate" id="startDate"  [ngModel]="eventDetails.start | date:'yyyy-MM-dd'" (ngModelChange)="eventStart.date = $event">
+        <input type="date" class="date" name="startDate" id="startDate"  [ngModel]="event.start | date:'yyyy-MM-dd'" (ngModelChange)="eventStart.date = $event">
         </div>
         <div class="inner-group">
             <label for="startTime">Start Time</label>
-            <input class="time" type="tel" name="startTime" id="startTimeHour" [ngModel]="eventDetails.start | date: 'hh'" (ngModelChange)="eventStart.hours = $event">:
-            <input class="time" type="tel" name="startTime" id="startTimeMinutes" [ngModel]="eventDetails.start | date: 'mm'" (ngModelChange)="eventStart.minutes = $event">
+            <input class="time" type="tel" name="startTime" id="startTimeHour" [ngModel]="event.start | date: 'hh'" (ngModelChange)="eventStart.hours = $event">:
+            <input class="time" type="tel" name="startTime" id="startTimeMinutes" [ngModel]="event.start | date: 'mm'" (ngModelChange)="eventStart.minutes = $event">
         </div>
         <div class="inner-group">
             <div class="radio-group">
@@ -46,13 +46,13 @@
     <div class="input-group input-bundle">
         <div class="inner-group">
             <label for="endDate">End Date</label>
-            <input class="date" type="date" name="endDate" id="endDate"  [ngModel]="eventDetails.end | date:'yyyy-MM-dd'" (ngModelChange)="eventEnd.date = $event">
+            <input class="date" type="date" name="endDate" id="endDate"  [ngModel]="event.end | date:'yyyy-MM-dd'" (ngModelChange)="eventEnd.date = $event">
         </div>
         
         <div class="inner-group">
             <label for="EndDate">End Time</label>
-            <input class="time" type="tel" name="endTime" id="endTimeHour" [ngModel]="eventDetails.end | date: 'hh'" (ngModelChange)="eventEnd.hours = $event">:
-            <input class="time" type="tel" name="endTime" id="endTimeMinutes"  [ngModel]="eventDetails.end|  date: 'mm'" (ngModelChange)="eventEnd.minutes = $event">
+            <input class="time" type="tel" name="endTime" id="endTimeHour" [ngModel]="event.end | date: 'hh'" (ngModelChange)="eventEnd.hours = $event">:
+            <input class="time" type="tel" name="endTime" id="endTimeMinutes"  [ngModel]="event.end|  date: 'mm'" (ngModelChange)="eventEnd.minutes = $event">
         </div>
         <div class="inner-group">
             <div class="radio-group">
@@ -67,7 +67,7 @@
     </div>
     <div class="input-group">
         <label>Description</label>
-        <textarea name="eventDescription" id="eventDescription" cols="30" rows="5" [(ngModel)]="eventDetails.description"></textarea>
+        <textarea name="eventDescription" id="eventDescription" cols="30" rows="5" [(ngModel)]="event.description"></textarea>
     </div>
     <div class="input-group button-group">
         <button (click)="canceledEventChanges()">Cancel</button>

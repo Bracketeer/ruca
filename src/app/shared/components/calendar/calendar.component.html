@@ -4,18 +4,49 @@
       <</div>
         <div class="dateheadercontainer">
         {{months[displayMonth]}}
-        <span class="year">{{currentYear}}</span>
+        <span class="year">{{displayYear}}</span>
     </div>
     <div class="arrow" (click)="date = newDate(1)">></div>
   </div>
   <div class="calendargrid">
     <div class="day" *ngFor="let day of days">{{getDayOfWeek(day)}}</div>
     <ng-container *ngFor="let date of monthgrid; let i = index">
-      <div class="date" *ngIf="i > (firstDay - 1) && i < (lastDay + firstDay); else blank"
-        [ngClass]="highlightedDay === i ? 'highlighted-date-range': null" (click)="highlightedDay = i" (mouseup)="endDaysByDrag(i - (firstDay - 1), null, $event)" (mousedown)="createEventByDrag(i - (firstDay - 1))">
+      <div 
+        class="date" 
+        *ngIf="i > (firstDay - 1) && i < (lastDay + firstDay); else blank"
+        [ngClass]="highlightedDay === i ? 'selected-date': null" 
+        (click)="selectDate(i, $event)" 
+        (mousedown)="selectDate(i, $event); createEventByDrag(i - (firstDay - 1), $event)"
+        (mouseup)="endDaysByDrag(i - (firstDay - 1), null, $event)"
+        (dblclick)="createEvent($event)">
         <div class="datenumber"
           [ngClass]="(i + 1) - firstDay === currentDay && this.displayMonth === this.currentMonth ? 'currentday': null">
           {{i - (firstDay - 1)}}</div>
+          <div class="date-options-container">
+            <div class="date-options">
+              <ng-container *ngIf="displayCalendarEvents(i - (firstDay - 1)).length > 0; else noEvents">
+                <div class="date-event-header">
+                  {{displayMonth + 1}}/{{i - (firstDay - 1)}}/{{displayYear}}
+                </div>
+                <a class="date-event" *ngFor="let event of displayCalendarEvents(i - (firstDay - 1))"
+                (click)="editEventDetails(event)">
+                <div class="event-node" [style.background]="event.color"></div>
+                <div class="event-name">
+                  {{event.name}}
+                </div>
+              </a>
+            </ng-container>
+                <ng-template #noEvents>
+                  <div class="date-event-header">
+                    {{displayMonth + 1}}/{{i - (firstDay - 1)}}/{{displayYear}}
+                  </div>
+                  <div class="date-event">
+                    No events
+                  </div>
+                </ng-template>
+            <a class="add-event" (click)="createEvent($event)">Add Event</a>
+          </div>
+          </div>
           <div class="events-container">
             <a class="date-event" *ngFor="let event of displayCalendarEvents(i - (firstDay - 1))" (click)="endDaysByDrag(i - (firstDay - 1), event, $event)">
               <div class="event-node" [style.background]="event.color"></div>
